@@ -4,7 +4,7 @@
       Programs
     </h1>
 
-    <UiLoader v-if="isInitialLoading" :class="$style.loader" />
+    <UiLoader v-if="isInitialLoading" :class="$style.loader" size="l" />
 
     <template v-else>
       <ul v-if="programs.length" :class="$style.programList">
@@ -229,6 +229,7 @@ onMounted(async () => {
   position: absolute;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
 

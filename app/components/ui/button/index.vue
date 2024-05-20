@@ -1,18 +1,16 @@
 <template>
   <button :class="$style.uiButton" :disabled="isLoading" @click="$emit('click')">
-    <UiLoader v-if="isLoading" />
+    <UiLoader v-if="isLoading" theme="secondary" size="s" />
 
     <slot v-else />
   </button>
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
-  isLoading: {
-    type: Boolean,
-    default: false,
-  },
-});
+interface Props {
+  isLoading?: boolean
+}
+withDefaults(defineProps<Props>(), { isLoading: false })
 </script>
 
 <style module>
@@ -23,6 +21,6 @@ const props = defineProps({
   border-radius: 12px;
   width: 100%;
   font-family: "Viga", sans-serif;
-  color: #000000;
+  color: var(--color-secondary-1);
 }
 </style>

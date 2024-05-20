@@ -1,31 +1,26 @@
 <template>
   <nav :class="$style.navigation">
     <ul :class="$style.navigationList">
-      <li v-for="link in navigation" :class="$style.navigationItem" @click="handleClick(link.route)">
-        <component :is="link.icon" :class="$style.navigationItemIcon" />
-
-        {{ link.title }}
+      <li v-for="link in navigation" :class="$style.navigationItem">
+        <NuxtLink :to="link.route" :class="$style.navigationItemLink" :active-class="$style['navigationItemLink--active']">
+          <Icon :class="$style.navigationItemIcon" :name="link.icon" />
+        </NuxtLink>
       </li>
     </ul>
   </nav>
 </template>
 
 <script lang="ts" setup>
-import Clipboard from "~/assets/icons/clipboard.svg";
-
 const navigation = reactive([
   {
-    title: "Programs",
     route: "/programs",
-    icon: Clipboard
+    icon: "carbon:list-checked"
+  },
+  {
+    route: "/",
+    icon: "carbon:home"
   },
 ]);
-
-const router = useRouter();
-
-const handleClick = (route: string) => {
-  router.push(route);
-}
 </script>
 
 <style module>
@@ -37,8 +32,12 @@ const handleClick = (route: string) => {
   left: 0;
   width: 100%;
   height: var(--nav-height);
-  background-color: #131313;
+  background-color: var(--color-secondary-1);
   z-index: 1000;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: hidden;
 }
 
 .navigationList {
@@ -54,14 +53,22 @@ const handleClick = (route: string) => {
   flex-direction: column;
   align-items: center;
   font-size: 12px;
-  color: #9DB2CE;
   padding: 15px;
   gap: 12px;
   font-family: "Viga", sans-serif;
 }
 
+.navigationItemLink {
+  color: #9DB2CE;
+  transition: color .3s ease;
+}
+
+.navigationItemLink--active {
+  color: var(--color-primary-1);
+}
+
 .navigationItemIcon {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
 }
 </style>

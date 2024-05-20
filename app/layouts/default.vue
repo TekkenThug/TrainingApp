@@ -9,5 +9,5 @@
 </template>
 
 <script setup lang="ts">
-import Navigation from "~/components/common/navigation/Navigation.vue";
+import Navigation from "~/components/common/navigation";
 </script>
