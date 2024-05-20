@@ -13,4 +13,7 @@ export class Program {
 
   @Column("integer")
   rest: number;
+
+  @Column({ type: "integer", default: 0 })
+  complete_count: number;
 }
