@@ -1,0 +1,50 @@
+:root {
+    --app-bg-color: #141414;
+    --app-text-color: #FFFFFF;
+
+    --nav-height: 90px;
+
+    --color-primary-1: #E6FE58;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: var(--app-bg-color);
+    color: var(--app-text-color);
+    min-height: 100dvh;
+}
+
+button {
+    padding: 0;
+    color: var(--app-text-color);
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.h1 {
+    font-size: 48px;
+    font-family: "Viga", sans-serif;
+    font-weight: 400;
+}
+
+.main {
+    position: relative;
+    height: calc(100dvh - var(--nav-height));
+    overflow: auto;
+}
+
+.page-block {
+    padding: 15px;
+}
