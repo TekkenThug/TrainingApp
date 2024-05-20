@@ -1,5 +1,9 @@
 <template>
-  <button :class="$style.uiButton" :disabled="isLoading" @click="$emit('click')">
+  <button
+      :class="classes"
+      :disabled="isLoading || disabled"
+      @click="$emit('click')"
+  >
     <UiLoader v-if="isLoading" theme="secondary" size="s" />
 
     <slot v-else />
@@ -8,9 +12,13 @@
 
 <script lang="ts" setup>
 interface Props {
-  isLoading?: boolean
+  isLoading?: boolean,
+  disabled?: boolean
 }
-withDefaults(defineProps<Props>(), { isLoading: false })
+const props = withDefaults(defineProps<Props>(), { isLoading: false, disabled: false });
+
+const $style = useCssModule();
+const classes = computed(() => ([$style.uiButton, { [$style["uiButton--disabled"]]: props.disabled }]))
 </script>
 
 <style module>
@@ -22,5 +30,9 @@ withDefaults(defineProps<Props>(), { isLoading: false })
   width: 100%;
   font-family: "Viga", sans-serif;
   color: var(--color-secondary-1);
+}
+
+.uiButton--disabled {
+  opacity: .65;
 }
 </style>
