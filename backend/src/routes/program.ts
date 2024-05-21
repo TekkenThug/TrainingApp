@@ -10,4 +10,6 @@ router.route("/")
 router.route("/:programId")
   .get(async (req, res) => res.json(await ProgramService.getById(+req.params.programId)))
 
+router.patch("/:programId/complete", async (req, res) => res.json(await ProgramService.increaseCompleteCount(+req.params.programId)))
+
 export default router;

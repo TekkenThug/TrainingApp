@@ -1,10 +1,16 @@
 import { Program } from "@/database/entity/Program.ts";
 import { AppDataSource } from "@/database/index.ts";
 
+interface CreateData {
+  title: string;
+  setCount: number;
+  rest: number;
+}
+
 export default class ProgramService {
   private static repository = AppDataSource.getRepository(Program);
 
-  static async create(data) {
+  static async create(data: CreateData) {
     const program = new Program();
 
     program.title = data.title;
@@ -20,5 +26,17 @@ export default class ProgramService {
 
   static async getById(id: number) {
     return await ProgramService.repository.findOneBy({ id });
+  }
+
+  static async increaseCompleteCount(id: number) {
+    const program = await this.getById(id);
+
+    if (!program) {
+      throw new Error("Not found");
+    }
+
+    ++program.complete_count;
+
+    return await ProgramService.repository.save(program);
   }
 }
