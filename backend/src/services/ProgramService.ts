@@ -17,4 +17,8 @@ export default class ProgramService {
   static async getAll() {
     return await ProgramService.repository.find();
   }
+
+  static async getById(id: number) {
+    return await ProgramService.repository.findOneBy({ id });
+  }
 }
