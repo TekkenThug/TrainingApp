@@ -39,36 +39,57 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
-  restMilliseconds: {
-    type: Number,
-    required: true
-  },
-
-  allMilliseconds: {
-    type: Number,
-    required: true
-  }
-});
+interface Props {
+  isStarted?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), { isStarted: false });
+const seconds = defineModel<number>({ required: true });
 
 const FULL_DASH_ARRAY = 283;
 
 const dashArray = computed(() => {
-  return `${Math.floor((props.restMilliseconds * FULL_DASH_ARRAY) / props.allMilliseconds)} 283`;
+  return `${Math.floor((seconds.value * FULL_DASH_ARRAY) / totalSeconds.value)} 283`;
 });
 
 const gradientStyle = computed(() => {
-  return { rotate: `${Math.floor((props.restMilliseconds / props.allMilliseconds) * 100)}deg` };
+  return { rotate: `${Math.floor((seconds.value / totalSeconds.value) * 100)}deg` };
 })
 
 const timeFields = computed(() => {
-  const totalSeconds = props.restMilliseconds / 1000;
+  const minutes = Math.floor(seconds.value / 60) < 10 ? `0${Math.floor(seconds.value / 60)}` : Math.floor(seconds.value / 60);
 
-  const minutes = Math.floor(totalSeconds / 60) < 10 ? `0${Math.floor(totalSeconds / 60)}` : Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60 < 10 ? `0${totalSeconds % 60}` : totalSeconds % 60;
-
-  return [minutes, seconds];
+  return [minutes, seconds.value % 60 < 10 ? `0${seconds.value % 60}` : seconds.value % 60];
 });
+
+const totalSeconds = ref(0);
+watch(() => props.isStarted, (value) => {
+  if (value) {
+    totalSeconds.value = seconds.value;
+    startTimer();
+  }
+});
+
+const emits = defineEmits(["end"]);
+const restOfTimeIntervalID = ref<ReturnType<typeof setInterval> | null>(null);
+const startTimer = () => {
+  restOfTimeIntervalID.value = setInterval(() => {
+    if (seconds.value === 0 && restOfTimeIntervalID.value) {
+      clearInterval(restOfTimeIntervalID.value);
+      restOfTimeIntervalID.value = null;
+      totalSeconds.value = 0;
+      emits("end");
+      return;
+    }
+
+    seconds.value -= 1;
+  }, 1000);
+}
+
+onBeforeUnmount(() => {
+  if (restOfTimeIntervalID.value) {
+    clearInterval(restOfTimeIntervalID.value);
+  }
+})
 </script>
 
 <style module>
