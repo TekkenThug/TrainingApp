@@ -30,9 +30,10 @@ const classes = computed(() => ([$style.uiButton, { [$style["uiButton--disabled"
   width: 100%;
   font-family: "Viga", sans-serif;
   color: var(--color-secondary-1);
+  transition: all .2s ease;
 }
 
 .uiButton--disabled {
-  opacity: .65;
+  background-color: var(--color-primary-2);
 }
 </style>
