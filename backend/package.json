@@ -6,7 +6,8 @@
     "pg": "^8.11.5",
     "reflect-metadata": "^0.2.2",
     "tsx": "^4.9.3",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "zod": "^3.23.8"
   },
   "name": "cultural-backend",
   "version": "0.1.0",
