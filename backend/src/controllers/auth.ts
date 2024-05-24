@@ -15,7 +15,7 @@ const login = catchAsync(async (req: Request, res: Response) => {
   const user = await AuthService.login(req.body);
   const tokens = await TokenService.generateAuthTokens(user);
 
-  return res.send({ user, tokens });
+  res.send({ user, tokens });
 });
 
 export default { register, login };
