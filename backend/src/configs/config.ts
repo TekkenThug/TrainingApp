@@ -4,7 +4,7 @@ import { z } from "zod";
 const EnvSchema = z.object({
   PORT: z.string().default("8000"),
   JWT_SECRET: z.string(),
-  JWT_ACCESS_EXPIRATION_MINUTES: z.string().default("60"),
+  JWT_ACCESS_EXPIRATION_MINUTES: z.string().default("30"),
   JWT_REFRESH_EXPIRATION_DAYS: z.string().default("30"),
 });
 

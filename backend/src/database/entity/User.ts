@@ -6,11 +6,8 @@ export class User {
     id: number;
 
     @Column("varchar")
-    first_name: string;
+    email: string;
 
     @Column("varchar")
-    last_name: string;
-
-    @Column("date")
-    birth_date: string;
+    password: string;
 }
