@@ -1,6 +1,7 @@
 import status from "statuses";
 import UserService from "@/services/UserService.ts";
 import { ApiError } from "@/utils/errors.ts";
+import TokenService from "@/services/TokenService.ts";
 
 interface Credentials {
   email: string;
@@ -16,5 +17,9 @@ export default class AuthService {
     }
 
     return user;
+  }
+
+  static async logout(refreshToken: string) {
+    await TokenService.invalidateRefreshToken(refreshToken);
   }
 }

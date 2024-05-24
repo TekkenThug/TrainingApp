@@ -7,6 +7,8 @@ import { AppDataSource } from "@/database/index.ts";
 import { Token } from "@/database/entity/Token.ts";
 import UserService from "@/services/UserService.ts";
 import { Timestamp } from "@/types/common.ts";
+import {ApiError} from "@/utils/errors.js";
+import status from "statuses";
 
 export default class TokenService {
   private static repository = AppDataSource.getRepository(Token);
@@ -61,5 +63,15 @@ export default class TokenService {
         expires: refreshTokenExpires,
       },
     };
+  }
+
+  static async invalidateRefreshToken(token: string) {
+    const foundToken = await TokenService.repository.findOneBy({ token });
+
+    if (!foundToken) {
+      throw new ApiError(status("NOT FOUND"), 'Not found');
+    }
+
+    await TokenService.repository.remove(foundToken);
   }
 }
