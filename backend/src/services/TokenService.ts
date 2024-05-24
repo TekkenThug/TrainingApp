@@ -7,7 +7,7 @@ import { AppDataSource } from "@/database/index.ts";
 import { Token } from "@/database/entity/Token.ts";
 import UserService from "@/services/UserService.ts";
 import { Timestamp } from "@/types/common.ts";
-import {ApiError} from "@/utils/errors.js";
+import { ApiError } from "@/utils/errors.js";
 import status from "statuses";
 
 export default class TokenService {
@@ -73,5 +73,19 @@ export default class TokenService {
     }
 
     await TokenService.repository.remove(foundToken);
+  }
+
+  static async verifyToken(token: string, type: TokenTypes) {
+    const payload = jwt.verify(token, config.jwt.secret);
+    const tokenRecord = await TokenService.repository.findOne({
+      where: { token, type, user: { id: Number(payload.sub) } },
+      relations: ["user"]
+    });
+
+    if (!tokenRecord) {
+      throw new Error("Not found");
+    }
+
+    return tokenRecord;
   }
 }

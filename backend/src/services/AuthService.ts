@@ -2,6 +2,8 @@ import status from "statuses";
 import UserService from "@/services/UserService.ts";
 import { ApiError } from "@/utils/errors.ts";
 import TokenService from "@/services/TokenService.ts";
+import { TokenTypes }  from "@/configs/tokens.ts";
+import {Token} from "@/database/entity/Token.js";
 
 interface Credentials {
   email: string;
@@ -21,5 +23,23 @@ export default class AuthService {
 
   static async logout(refreshToken: string) {
     await TokenService.invalidateRefreshToken(refreshToken);
+  }
+
+  static async refreshAuth(refreshToken: string) {
+    try {
+      const token = await TokenService.verifyToken(refreshToken, TokenTypes.REFRESH);
+      const user = await UserService.getById(token.user.id);
+
+      if (!user) {
+        throw new Error();
+      }
+
+      await TokenService.invalidateRefreshToken(token.token);
+
+      return await TokenService.generateAuthTokens(user);
+    } catch (e) {
+      console.log(e);
+      throw new ApiError(status("UNAUTHORIZED"), 'Please authenticate');
+    }
   }
 }
