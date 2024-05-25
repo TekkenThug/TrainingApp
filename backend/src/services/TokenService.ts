@@ -46,12 +46,13 @@ export default class TokenService {
   }
 
   static async generateAuthTokens(user: User) {
-    const accessTokenExpires = addMinutes(new Date(), +config.jwt.accessExpirationMinutes);
-    const accessToken = await TokenService.generateToken(user.id, getTime(accessTokenExpires), TokenTypes.ACCESS);
+    const accessTokenExpires = getTime(addMinutes(new Date(), +config.jwt.accessExpirationMinutes));
+    const accessToken = await TokenService.generateToken(user.id, accessTokenExpires, TokenTypes.ACCESS);
 
-    const refreshTokenExpires = addDays(new Date(), +config.jwt.refreshExpirationDays);
-    const refreshToken = await TokenService.generateToken(user.id, getTime(refreshTokenExpires), TokenTypes.REFRESH);
-    await TokenService.saveToken(refreshToken, user.id, getTime(refreshTokenExpires), TokenTypes.REFRESH);
+    const refreshTokenExpires = getTime(addDays(new Date(), +config.jwt.refreshExpirationDays));
+    console.log(refreshTokenExpires);
+    const refreshToken = await TokenService.generateToken(user.id, refreshTokenExpires, TokenTypes.REFRESH);
+    await TokenService.saveToken(refreshToken, user.id, refreshTokenExpires, TokenTypes.REFRESH);
 
     return {
       access: {
