@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import passport from "passport";
 import "reflect-metadata";
 
@@ -7,12 +8,14 @@ import { AppDataSource } from "@/database/index.ts";
 import router from "@/routes/v1/index.ts";
 
 import config from "@/configs/config.ts";
+import corsConfig from "@/configs/cors.ts";
 
 import { jwtStrategy } from "@/configs/passport.ts";
 
 const app = express();
 
-app.use(cors());
+app.use(cors(corsConfig));
+app.use(cookieParser());
 app.use(express.json());
 app.use("/api/v1", router);
 
