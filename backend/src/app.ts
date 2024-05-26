@@ -23,16 +23,15 @@ app.use(passport.initialize());
 passport.use("jwt", jwtStrategy);
 
 const init = async () => {
-    try {
-        await AppDataSource.initialize();
+  try {
+    await AppDataSource.initialize();
 
-        app.listen(config.port, () => {
-            console.log(`Server is started on port: ${config.port}`);
-        });
-    } catch (e) {
-        console.log(e);
-    }
+    app.listen(config.port, () => {
+      // console.log(`Server is started on port: ${config.port}`);
+    });
+  } catch (e) {
+    // console.log(e);
+  }
 };
 
 init();
-

@@ -18,5 +18,5 @@ export default {
     secret: env.JWT_SECRET,
     accessExpirationMinutes: env.JWT_ACCESS_EXPIRATION_MINUTES,
     refreshExpirationDays: env.JWT_REFRESH_EXPIRATION_DAYS,
-  }
-}
+  },
+};

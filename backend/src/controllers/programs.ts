@@ -1,12 +1,12 @@
 import { catchAsync } from "@/utils/errors.ts";
 import ProgramService from "@/services/ProgramService.ts";
 
-const getAll = catchAsync(async (_, res) => {
-  res.send(await ProgramService.getAll());
+const getAll = catchAsync(async (req, res) => {
+  res.send(await ProgramService.getAll(+req.query.userId));
 });
 
 const createProgram = catchAsync(async (req, res) => {
-  res.send(await ProgramService.create(req.body))
+  res.send(await ProgramService.create(req.body.payload, req.body.userId));
 });
 
 const getProgramById = catchAsync(async (req, res) => {
@@ -21,5 +21,5 @@ export default {
   getAll,
   createProgram,
   getProgramById,
-  completeProgram
-}
+  completeProgram,
+};

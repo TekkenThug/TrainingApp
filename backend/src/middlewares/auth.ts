@@ -5,7 +5,7 @@ import { ApiError } from "@/utils/errors.ts";
 
 const verifyCallback = (req: Request, resolve, reject) => async (err, user, info) => {
   if (err || info || !user) {
-    return reject(new ApiError(status("Unauthorized"), 'Please authenticate'));
+    return reject(new ApiError(status("Unauthorized"), "Please authenticate"));
   }
 
   req.user = user;
@@ -17,15 +17,15 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     await new Promise((resolve, reject) => {
       passport.authenticate(
-        'jwt',
+        "jwt",
         {
-          session: false
+          session: false,
         },
-        verifyCallback(req, resolve, reject)
+        verifyCallback(req, resolve, reject),
       )(req, res, next);
     });
     return next();
   } catch (err) {
     return next(err);
   }
-}
+};

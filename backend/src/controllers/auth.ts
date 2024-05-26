@@ -15,15 +15,11 @@ const login = catchAsync(async (req, res) => {
   const user = await AuthService.login(req.body);
   const tokens = await TokenService.generateAuthTokens(user);
 
-  res.cookie(
-    "refreshToken",
-    tokens.refresh.token,
-    {
-      maxAge: tokens.refresh.expires - getUnixTime(new Date()) * 1000,
-      path: "/api/v1/auth",
-      httpOnly: true
-    }
-  );
+  res.cookie("refreshToken", tokens.refresh.token, {
+    maxAge: tokens.refresh.expires - getUnixTime(new Date()) * 1000,
+    path: "/api/v1/auth",
+    httpOnly: true,
+  });
 
   res.send(tokens.access);
 });
@@ -36,15 +32,11 @@ const logout = catchAsync(async (req, res) => {
 const refreshTokens = catchAsync(async (req, res) => {
   const tokens = await AuthService.refreshAuth(req.cookies.refreshToken);
 
-  res.cookie(
-    "refreshToken",
-    tokens.refresh.token,
-    {
-      maxAge: tokens.refresh.expires - getUnixTime(new Date()) * 1000,
-      path: "/api/v1/auth",
-      httpOnly: true
-    }
-  );
+  res.cookie("refreshToken", tokens.refresh.token, {
+    maxAge: tokens.refresh.expires - getUnixTime(new Date()) * 1000,
+    path: "/api/v1/auth",
+    httpOnly: true,
+  });
 
   res.send(tokens.access);
 });

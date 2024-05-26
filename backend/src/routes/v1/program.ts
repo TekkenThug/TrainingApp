@@ -4,13 +4,10 @@ import programController from "@/controllers/programs.ts";
 
 const router = Router();
 
-router.route("/")
-  .get(auth, programController.getAll)
-  .post(auth, programController.createProgram);
+router.route("/").get(auth, programController.getAll).post(auth, programController.createProgram);
 
-router.route("/:programId")
-  .get(auth, programController.getProgramById);
+router.route("/:programId").get(auth, programController.getProgramById);
 
-router.patch("/:programId/complete", auth, programController.completeProgram)
+router.patch("/:programId/complete", auth, programController.completeProgram);
 
 export default router;

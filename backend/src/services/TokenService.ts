@@ -1,24 +1,19 @@
 import jwt from "jsonwebtoken";
-import { User } from "@/database/entity/User.ts";
 import { addDays, addMinutes, getTime } from "date-fns";
+import status from "statuses";
+import { User } from "@/database/entity/User.ts";
 import config from "@/configs/config.ts";
 import { TokenTypes } from "@/configs/tokens.ts";
 import { AppDataSource } from "@/database/index.ts";
 import { Token } from "@/database/entity/Token.ts";
 import UserService from "@/services/UserService.ts";
 import { Timestamp } from "@/types/common.ts";
-import { ApiError } from "@/utils/errors.js";
-import status from "statuses";
+import { ApiError } from "@/utils/errors.ts";
 
 export default class TokenService {
   private static repository = AppDataSource.getRepository(Token);
 
-  private static async generateToken(
-    userId: number,
-    expires: Timestamp,
-    type: string,
-    secret = config.jwt.secret
-  ) {
+  private static async generateToken(userId: number, expires: Timestamp, type: string, secret = config.jwt.secret) {
     const payload = {
       sub: userId,
       iat: getTime(new Date()),
@@ -50,7 +45,6 @@ export default class TokenService {
     const accessToken = await TokenService.generateToken(user.id, accessTokenExpires, TokenTypes.ACCESS);
 
     const refreshTokenExpires = getTime(addDays(new Date(), +config.jwt.refreshExpirationDays));
-    console.log(refreshTokenExpires);
     const refreshToken = await TokenService.generateToken(user.id, refreshTokenExpires, TokenTypes.REFRESH);
     await TokenService.saveToken(refreshToken, user.id, refreshTokenExpires, TokenTypes.REFRESH);
 
@@ -70,7 +64,7 @@ export default class TokenService {
     const foundToken = await TokenService.repository.findOneBy({ token });
 
     if (!foundToken) {
-      throw new ApiError(status("NOT FOUND"), 'Not found');
+      throw new ApiError(status("NOT FOUND"), "Not found");
     }
 
     await TokenService.repository.remove(foundToken);
@@ -80,7 +74,7 @@ export default class TokenService {
     const payload = jwt.verify(token, config.jwt.secret);
     const tokenRecord = await TokenService.repository.findOne({
       where: { token, type, user: { id: Number(payload.sub) } },
-      relations: ["user"]
+      relations: ["user"],
     });
 
     if (!tokenRecord) {

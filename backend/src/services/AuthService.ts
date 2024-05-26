@@ -2,8 +2,7 @@ import status from "statuses";
 import UserService from "@/services/UserService.ts";
 import { ApiError } from "@/utils/errors.ts";
 import TokenService from "@/services/TokenService.ts";
-import { TokenTypes }  from "@/configs/tokens.ts";
-import {Token} from "@/database/entity/Token.js";
+import { TokenTypes } from "@/configs/tokens.ts";
 
 interface Credentials {
   email: string;
@@ -38,8 +37,7 @@ export default class AuthService {
 
       return await TokenService.generateAuthTokens(user);
     } catch (e) {
-      console.log(e);
-      throw new ApiError(status("UNAUTHORIZED"), 'Please authenticate');
+      throw new ApiError(status("UNAUTHORIZED"), "Please authenticate");
     }
   }
 }

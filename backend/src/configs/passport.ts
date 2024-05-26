@@ -11,7 +11,7 @@ const jwtOptions: StrategyOptionsWithoutRequest = {
 const jwtVerify: VerifyCallback = async (payload, done) => {
   try {
     if (payload.type !== TokenTypes.ACCESS) {
-      throw new Error('Invalid token type');
+      throw new Error("Invalid token type");
     }
 
     const user = await UserService.getById(payload.sub);
@@ -23,6 +23,6 @@ const jwtVerify: VerifyCallback = async (payload, done) => {
   } catch (e) {
     done(e, false);
   }
-}
+};
 
 export const jwtStrategy = new Strategy(jwtOptions, jwtVerify);
