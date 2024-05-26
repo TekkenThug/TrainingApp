@@ -23,7 +23,7 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/app.ts",
+    "dev": "tsx watch src/index.ts",
     "lint": "eslint --ext .ts .",
     "lint:fix": "eslint --fix --ext .ts ."
   },
