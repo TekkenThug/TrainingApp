@@ -37,7 +37,7 @@ export default class AuthService {
 
       return await TokenService.generateAuthTokens(user);
     } catch (e) {
-      throw new ApiError(status("UNAUTHORIZED"), "Please authenticate");
+      throw new ApiError(status("Unauthorized"), "Please authenticate");
     }
   }
 }

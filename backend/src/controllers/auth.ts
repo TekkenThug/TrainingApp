@@ -8,7 +8,7 @@ import TokenService from "@/services/TokenService.ts";
 const register = catchAsync(async (req, res) => {
   const user = await UserService.registerNewUser(req.body);
 
-  res.status(status("CREATED")).send(user);
+  res.status(status("Created")).send(user);
 });
 
 const login = catchAsync(async (req, res) => {

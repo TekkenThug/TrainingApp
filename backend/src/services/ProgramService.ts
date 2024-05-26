@@ -23,7 +23,7 @@ export default class ProgramService {
     const user = await UserService.getById(userId);
 
     if (!user) {
-      throw new ApiError(status("NOT FOUND"), "User not found");
+      throw new ApiError(status("Not found"), "User not found");
     }
 
     program.user = user;
