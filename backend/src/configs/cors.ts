@@ -4,7 +4,7 @@ import config from "@/configs/config.ts";
 const options: CorsOptions = {
   credentials: true,
   origin: (origin, cb) => {
-    if (origin && config.appWhitelist.indexOf(origin) !== -1) {
+    if ((origin && config.appWhitelist.includes(origin)) || (!origin && config.env === "dev")) {
       cb(null, true);
     } else {
       cb(new Error("Not allowed by CORS"));
