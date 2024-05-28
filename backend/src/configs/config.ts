@@ -16,6 +16,7 @@ const env = EnvSchema.parse(process.env);
 export default {
   appUrl: env.APP_URL,
   appWhitelist: env.APP_WHITELIST.split(";"),
+  appVersion: process.env.npm_package_version as string,
   env: env.NODE_ENV,
   port: env.PORT,
   jwt: {
