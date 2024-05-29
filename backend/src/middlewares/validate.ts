@@ -2,7 +2,7 @@ import { ZodSchema } from "zod";
 import { fromError } from "zod-validation-error";
 import pick from "lodash.pick";
 import status from "statuses";
-import { NextFunction, Request } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ApiError } from "@/utils/errors";
 
 export default (schema: ZodSchema) => (req: Request, _: Response, next: NextFunction) => {
