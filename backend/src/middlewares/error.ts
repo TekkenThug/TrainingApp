@@ -1,10 +1,15 @@
+import { Request, Response, NextFunction } from "express";
 import status from "statuses";
 import config from "@/configs/config";
 import logger from "@/configs/logger";
 import { ApiError } from "@/utils/errors";
-import { Request, Response, NextFunction } from "express";
 
-export const errorConverter = (err: (Error & { statusCode?: number }) | ApiError, req: Request, res: Response, next: NextFunction) => {
+export const errorConverter = (
+  err: (Error & { statusCode?: number }) | ApiError,
+  _req: Request,
+  _res: Response,
+  next: NextFunction,
+) => {
   let error = err;
 
   if (!(error instanceof ApiError)) {
@@ -16,7 +21,7 @@ export const errorConverter = (err: (Error & { statusCode?: number }) | ApiError
   next(error);
 };
 
-export const errorHandler = (err: ApiError, req: Request, res: Response, next: NextFunction) => {
+export const errorHandler = (err: ApiError, _: Request, res: Response, _next: NextFunction) => {
   let { statusCode, message } = err;
   if (config.env === "prod" && !err.isOperational) {
     statusCode = status("Internal server error");

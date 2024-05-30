@@ -4,13 +4,18 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import "reflect-metadata";
 
-import router from "@/routes/v1/";
+import router from "@/routes/v1";
 import { errorConverter, errorHandler } from "@/middlewares/error";
+
+import morgan from "@/configs/morgan";
 
 import corsConfig from "@/configs/cors";
 import { jwtStrategy } from "@/configs/passport";
 
 const app = express();
+
+app.use(morgan.successHandler);
+app.use(morgan.errorHandler);
 
 app.use(cors(corsConfig));
 app.use(cookieParser());
