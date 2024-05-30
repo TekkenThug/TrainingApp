@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import passport from "passport";
+import helmet from "helmet";
 import "reflect-metadata";
 
 import router from "@/routes/v1";
@@ -13,6 +14,8 @@ import corsConfig from "@/configs/cors";
 import { jwtStrategy } from "@/configs/passport";
 
 const app = express();
+
+app.use(helmet());
 
 app.use(morgan.successHandler);
 app.use(morgan.errorHandler);
