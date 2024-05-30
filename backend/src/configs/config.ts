@@ -5,15 +5,15 @@ const EnvSchema = z.object({
   APP_URL: z.string().url(),
   APP_WHITELIST: z.string(),
   DB_HOST: z.string(),
-  DB_PORT: z.string(),
+  DB_PORT: z.coerce.number(),
   DB_NAME: z.string(),
   DB_USER: z.string(),
   DB_PASSWORD: z.string(),
   NODE_ENV: z.union([z.literal("prod"), z.literal("dev")]),
-  PORT: z.string().default("8000"),
+  PORT: z.coerce.number().default(8000),
   JWT_SECRET: z.string(),
-  JWT_ACCESS_EXPIRATION_MINUTES: z.string().default("30"),
-  JWT_REFRESH_EXPIRATION_DAYS: z.string().default("30"),
+  JWT_ACCESS_EXPIRATION_MINUTES: z.coerce.number().default(30),
+  JWT_REFRESH_EXPIRATION_DAYS: z.coerce.number().default(30),
 });
 
 const env = EnvSchema.parse(process.env);
