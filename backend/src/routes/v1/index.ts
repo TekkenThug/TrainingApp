@@ -3,7 +3,7 @@ import config from "@/configs/config";
 
 import authRouter from "./auth";
 import userRouter from "./user";
-import programRouter from "./program";
+import programRouter from "./programs";
 import docsRouter from "./docs";
 
 const router = Router();

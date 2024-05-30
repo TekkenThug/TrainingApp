@@ -1,8 +1,8 @@
 import status from "statuses";
-import { ApiError } from "@/utils/errors.ts";
-import { Program } from "@/database/entity/Program.ts";
-import { AppDataSource } from "@/database/index.ts";
-import UserService from "@/services/UserService.ts";
+import { ApiError } from "@/utils/errors";
+import { Program } from "@/database/entity/Program";
+import { AppDataSource } from "@/database";
+import { User } from "@/database/entity/User";
 
 interface CreateData {
   title: string;
@@ -13,14 +13,12 @@ interface CreateData {
 export default class ProgramService {
   private static repository = AppDataSource.getRepository(Program);
 
-  static async create(data: CreateData, userId: number) {
+  static async create(data: CreateData, user: User) {
     const program = new Program();
 
     program.title = data.title;
     program.set_count = data.setCount;
     program.rest = data.rest;
-
-    const user = await UserService.getById(userId);
 
     if (!user) {
       throw new ApiError(status("Not found"), "User not found");
@@ -28,22 +26,27 @@ export default class ProgramService {
 
     program.user = user;
 
-    return await ProgramService.repository.save(program);
+    const { id } = await ProgramService.repository.save(program);
+
+    return ProgramService.repository.createQueryBuilder("program").where("program.id = :id", { id }).getOne();
   }
 
   static async getAll(userId: number) {
     return await ProgramService.repository.find({ where: { user: { id: userId } } });
   }
 
-  static async getById(id: number) {
-    return await ProgramService.repository.findOneBy({ id });
+  static async getById(id: number, userId: number) {
+    return await ProgramService.repository
+      .createQueryBuilder("program")
+      .where("program.id = :id and program.userId = :userId", { id, userId })
+      .getOne();
   }
 
-  static async increaseCompleteCount(id: number) {
-    const program = await this.getById(id);
+  static async increaseCompleteCount(id: number, userId: number) {
+    const program = await this.getById(id, userId);
 
     if (!program) {
-      throw new Error("Not found");
+      throw new ApiError(status("Not found"), "Program not found");
     }
 
     program.complete_count += 1;

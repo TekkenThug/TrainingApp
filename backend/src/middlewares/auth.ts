@@ -1,7 +1,7 @@
 import passport from "passport";
 import { NextFunction, Request, Response } from "express";
 import status from "statuses";
-import { ApiError } from "@/utils/errors.ts";
+import { ApiError } from "@/utils/errors";
 
 const verifyCallback = (req: Request, resolve, reject) => async (err, user, info) => {
   if (err || info || !user) {
