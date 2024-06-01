@@ -29,7 +29,7 @@
   "main": "src/app.js",
   "type": "module",
   "engines": {
-    "node": "20.0.0"
+    "node": "20.14.0"
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
