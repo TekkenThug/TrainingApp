@@ -25,10 +25,10 @@ export default class UserService {
     const user = await UserService.getByEmail(credentials.email);
 
     if (user) {
-      throw new ApiError(status("Bad request"), "Email already exist");
+      throw new ApiError(status("Unprocessable Entity"), "User already exist");
     }
 
-    await UserService.create({ ...credentials, password: await bcrypt.hash(credentials.password, 8) });
+    return await UserService.create({ ...credentials, password: await bcrypt.hash(credentials.password, 8) });
   }
 
   static async getAll() {

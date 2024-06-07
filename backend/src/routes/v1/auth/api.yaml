@@ -48,6 +48,65 @@ security:
               code: 400
               message: "Bad request"
 
+/auth/register:
+  post:
+    summary: Register as user
+    tags: [ Auth ]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+              - repeatPassword
+            properties:
+              email:
+                type: string
+                format: email
+                description: must be unique
+              password:
+                type: string
+                format: password
+                minLength: 8
+                description: At least one number and one letter
+              repeatPassword:
+                type: string
+                format: password
+                minLength: 8
+                description: Must be the same with password
+            example:
+              email: fake@example.com
+              password: password1
+              repeatPassword: password1
+    responses:
+      201:
+        description: Created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      400:
+        description: Bad request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error'
+            example:
+              code: 400
+              message: "Invalid email"
+      422:
+        description: User already exists
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error'
+            example:
+              code: 422
+              message: "User already exists"
+
 /auth/refresh:
   post:
     summary: Refresh JWT tokens

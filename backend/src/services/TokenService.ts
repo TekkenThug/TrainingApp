@@ -64,7 +64,7 @@ export default class TokenService {
     const foundToken = await TokenService.repository.findOneBy({ token });
 
     if (!foundToken) {
-      throw new ApiError(status("NOT FOUND"), "Not found");
+      throw new ApiError(status("Not found"), "Not found");
     }
 
     await TokenService.repository.remove(foundToken);
