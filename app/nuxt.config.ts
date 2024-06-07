@@ -3,7 +3,7 @@ export default defineNuxtConfig({
 
   ssr: false,
 
-  modules: ["nuxt-svgo", "nuxt-icon", "@vite-pwa/nuxt", "@pinia/nuxt"],
+  modules: ["nuxt-svgo", "nuxt-icon", "@pinia/nuxt"],
 
   app: {
     head: {
