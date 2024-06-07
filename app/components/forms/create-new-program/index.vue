@@ -29,25 +29,19 @@ const newProgramData = reactive({
 const loading = ref(false);
 
 const isValidData = computed(() => newProgramData.title && newProgramData.setCount > 0 && (newProgramData.restTimeMinutes !== null || newProgramData.restTimeSeconds !== null));
-
 const authStore = useAuthStore();
-
 const saveNewProgram = async () => {
+  if (loading.value) return;
+
   loading.value = true;
 
   try {
-    const program = await $fetch("http://localhost:8000/api/v1/programs/", {
-      method: "POST",
-      headers: {
-        "Authorization": `bearer ${authStore.token}`
-      },
+    const program = await authStore.fetchAPI("/programs", {
+      method: "post",
       body: {
-        payload: {
-          title: newProgramData.title,
-          setCount: newProgramData.setCount,
-          rest: newProgramData.restTimeMinutes * 60 + newProgramData.restTimeSeconds
-        },
-        userId: authStore.userId
+        title: newProgramData.title,
+        setCount: newProgramData.setCount,
+        rest: newProgramData.restTimeMinutes * 60 + newProgramData.restTimeSeconds,
       }
     });
 

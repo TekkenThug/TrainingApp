@@ -1,7 +1,9 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
-  modules: ["nuxt-svgo", "nuxt-icon"],
+  ssr: false,
+
+  modules: ["nuxt-svgo", "nuxt-icon", "@pinia/nuxt"],
 
   app: {
     head: {
@@ -10,6 +12,12 @@ export default defineNuxtConfig({
         { rel: "preconnect", href: "https://fonts.gstatic.com" },
         { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Viga&display=swap" }
       ]
+    }
+  },
+
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL || "http://localhost:8000/api/v1"
     }
   },
 

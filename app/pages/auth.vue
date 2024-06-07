@@ -34,9 +34,22 @@ const authCredentials = reactive({
 });
 const buttonIsDisabled = computed(() => !authCredentials.email || !authCredentials.password);
 
+const router = useRouter();
 const authStore = useAuthStore();
 const auth = async () => {
-  await authStore.authenticateUser(authCredentials);
+  if (isLoading.value) {
+    return;
+  }
+
+  try {
+    isLoading.value = true;
+    await authStore.authenticateUser(authCredentials);
+    await router.push("/");
+  } catch (e) {
+    console.log(e);
+  } finally {
+    isLoading.value = false;
+  }
 }
 </script>
 

@@ -7,18 +7,23 @@ interface UserPayloadInterface {
   password: string;
 }
 
+interface TokenResponse {
+  token: string;
+  expires: number;
+}
+
 export const useAuthStore = defineStore("auth", () => {
+  const config = useRuntimeConfig();
   const authenticated = ref(false);
 
-  const token = useLocalStorage("token", null);
-  const tokenExpires = useLocalStorage<string | null>("token_exp", null);
+  const token = useLocalStorage<string | null>("token", null);
+  const tokenExpires = useLocalStorage<number | null>("token_exp", null);
 
   const tokenIsExpired = computed(() => {
     if (!tokenExpires.value) return false;
 
-    return new Date().getTime() > new Date(tokenExpires.value).getTime()
+    return new Date().getTime() > tokenExpires.value;
   });
-
   const userId = computed(() => {
     if (!token.value) return null;
 
@@ -28,7 +33,7 @@ export const useAuthStore = defineStore("auth", () => {
   })
 
   const authenticateUser = async ({ email, password }: UserPayloadInterface) => {
-    const data = await $fetch('http://localhost:8000/api/v1/auth/login', {
+    const data = await $fetch<TokenResponse>(`${config.public.baseURL}/auth/login`, {
       method: 'post',
       body: {
         email,
@@ -42,9 +47,8 @@ export const useAuthStore = defineStore("auth", () => {
 
     authenticated.value = true;
   }
-
   const refreshTokens = async () => {
-    const data = await $fetch("http://localhost:8000/api/v1/auth/refresh", {
+    const data = await $fetch<TokenResponse>(`${config.public.baseURL}/auth/refresh`, {
       method: "post",
       credentials: "include"
     });
@@ -52,9 +56,8 @@ export const useAuthStore = defineStore("auth", () => {
     token.value = data.token;
     tokenExpires.value = data.expires;
   };
-
   const logout = async () => {
-    await $fetch("http://localhost:8000/api/v1/auth/logout", {
+    await $fetch(`${config.public.baseURL}/auth/logout`, {
       method: "post",
       credentials: "include"
     });
@@ -65,6 +68,11 @@ export const useAuthStore = defineStore("auth", () => {
     authenticated.value = false;
   };
 
+  const fetchAPI = computed(() => $fetch.create({
+    baseURL: config.public.baseURL,
+    headers: [["Authorization", `bearer ${token.value}`]]
+  }));
+
   return {
     authenticated,
     authenticateUser,
@@ -72,6 +80,7 @@ export const useAuthStore = defineStore("auth", () => {
     tokenIsExpired,
     refreshTokens,
     logout,
-    userId
+    userId,
+    fetchAPI
   }
 });

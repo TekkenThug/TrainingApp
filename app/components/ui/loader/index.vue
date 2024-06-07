@@ -7,7 +7,7 @@
 
 <script lang="ts" setup>
 interface Props {
-  size?: "s" | "m" | "l",
+  size?: "s" | "m" | "l" | "xl",
   theme?: "primary" | "secondary"
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -35,6 +35,11 @@ const classes = computed(() => ([
 .size--l {
   width: 32px;
   height: 32px;
+}
+
+.size--xl {
+  width: 60px;
+  height: 60px;
 }
 
 .theme--primary {

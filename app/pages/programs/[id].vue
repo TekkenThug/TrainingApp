@@ -40,19 +40,20 @@ const programData = ref<null | { set_count: number, active: number, rest: number
 const restTime = ref(0);
 const sound = ref<HTMLAudioElement>(new Audio(Sound));
 
-await useAPI(`/programs/${route.params.id}`, {
-  onResponse({ response }) {
+const authStore = useAuthStore();
+onBeforeMount(async () => {
+  try {
+    const program = await authStore.fetchAPI(`/programs/${route.params.id}`);
     programData.value = {
-      ...response._data,
-      active: 1
-    };
-
+      ...program,
+      active: 1,
+    }
     restTime.value = programData.value.rest;
-
     isLoading.value = false;
+  } catch (e) {
+    console.log(e);
   }
 });
-const { execute: sendToComplete } = await useAPI(`/programs/${route.params.id}/complete`, { method: "PATCH", immediate: false })
 
 const timerIsWorking = ref(false);
 const start = () => {
@@ -67,7 +68,9 @@ const end = () => {
     restTime.value = programData.value.rest;
 
     if (programData.value.active === programData.value.set_count) {
-      await sendToComplete()
+      await authStore.fetchAPI(`/programs/${route.params.id}/complete`, {
+        method: "patch"
+      });
 
       await router.push({ name: "programs" });
     } else {

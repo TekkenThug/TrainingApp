@@ -72,6 +72,8 @@ watch(() => props.isStarted, (value) => {
 const emits = defineEmits(["end"]);
 const restOfTimeIntervalID = ref<ReturnType<typeof setInterval> | null>(null);
 const startTimer = () => {
+  seconds.value -= 1;
+
   restOfTimeIntervalID.value = setInterval(() => {
     if (seconds.value === 0 && restOfTimeIntervalID.value) {
       clearInterval(restOfTimeIntervalID.value);
