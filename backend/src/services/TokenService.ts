@@ -1,14 +1,14 @@
 import jwt from "jsonwebtoken";
 import { addDays, addMinutes, getTime } from "date-fns";
 import status from "statuses";
-import { User } from "@/database/entity/User.ts";
-import config from "@/configs/config.ts";
-import { TokenTypes } from "@/configs/tokens.ts";
-import { AppDataSource } from "@/database/index.ts";
-import { Token } from "@/database/entity/Token.ts";
-import UserService from "@/services/UserService.ts";
-import { Timestamp } from "@/types/common.ts";
-import { ApiError } from "@/utils/errors.ts";
+import { User } from "@/database/entity/User";
+import config from "@/configs/config";
+import { TokenTypes } from "@/configs/tokens";
+import { AppDataSource } from "@/database";
+import { Token } from "@/database/entity/Token";
+import UserService from "@/services/UserService";
+import { Timestamp } from "@/types/common";
+import { ApiError } from "@/utils/errors";
 
 export default class TokenService {
   private static repository = AppDataSource.getRepository(Token);

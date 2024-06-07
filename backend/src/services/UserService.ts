@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import status from "statuses";
-import { User } from "@/database/entity/User.ts";
-import { AppDataSource } from "@/database/index.ts";
-import { ApiError } from "@/utils/errors.ts";
+import { User } from "@/database/entity/User";
+import { AppDataSource } from "@/database";
+import { ApiError } from "@/utils/errors";
 
 interface RegisterCredentials {
   email: string;
