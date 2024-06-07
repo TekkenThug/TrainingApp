@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.auth">
+  <section :class="$style.auth">
     <div :class="$style.content">
       <h1 :class="['h1', $style.title]">
         Training App
@@ -19,7 +19,7 @@
         Log in
       </UiButton>
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>

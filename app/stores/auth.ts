@@ -57,10 +57,7 @@ export const useAuthStore = defineStore("auth", () => {
     tokenExpires.value = data.expires;
   };
   const logout = async () => {
-    await $fetch(`${config.public.baseURL}/auth/logout`, {
-      method: "post",
-      credentials: "include"
-    });
+    await fetchAPI.value("/auth/logout", { method: "post", credentials: "include" })
 
     token.value = null;
     tokenExpires.value = null;
