@@ -9,5 +9,5 @@ services:
 
   api:
     container_name: node-api
-    command: npm run prod
+    command: npm run prod:start
 
