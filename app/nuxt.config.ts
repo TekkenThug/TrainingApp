@@ -18,7 +18,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseURL: process.env.BASE_URL || "http://localhost:8000/api/v1"
+      baseURL: process.env.NODE_ENV === "prod" ? "http://localhost:8000/api/v1" : "http://147.45.251.245:8000"
     }
   },
 
