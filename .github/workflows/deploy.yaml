@@ -26,4 +26,4 @@ jobs:
             echo "${APP_ENV}" > ./.env &&
             export NVM_DIR=~/.nvm &&
             source ~/.nvm/nvm.sh &&
-            bash ./scripts/prod.sh
+            bash scripts/prod.sh
