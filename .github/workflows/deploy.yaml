@@ -3,7 +3,7 @@ name: Deploy from main
 on:
   push:
     branches:
-      - v0.1.0
+      - main
 
 jobs:
   deploy:
@@ -21,8 +21,8 @@ jobs:
           envs: APP_ENV
           script: |
             cd ~/projects/TrainingApp &&
-            git checkout v0.1.0 &&
-            git pull &&
+            git checkout main &&
+            git pull origin main &&
             echo "${APP_ENV}" > ./.env &&
             export NVM_DIR=~/.nvm &&
             source ~/.nvm/nvm.sh &&
