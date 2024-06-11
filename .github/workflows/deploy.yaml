@@ -20,10 +20,10 @@ jobs:
           port: 22
           envs: APP_ENV
           script: |
-            cd ~/projects/TrainingApp &&
-            git checkout main &&
-            git pull origin main &&
-            echo "${APP_ENV}" > ./.env &&
-            export NVM_DIR=~/.nvm &&
-            source ~/.nvm/nvm.sh &&
+            cd ~/projects/TrainingApp
+            git checkout main
+            git pull origin main
+            echo "${APP_ENV}" > ./.env
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             bash scripts/prod.sh
