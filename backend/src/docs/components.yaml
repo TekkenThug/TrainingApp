@@ -30,15 +30,3 @@ components:
       example:
         id: 5
         title: Martin Eden
-
-    CreateProgramPayload:
-      type: object
-      properties:
-        title:
-          type: string
-        setCount:
-          type: number
-        rest:
-          type: number
-          description: Rest between sets in seconds
-
