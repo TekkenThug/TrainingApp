@@ -20,27 +20,16 @@ components:
         message:
           type: string
 
-    Program:
+    Book:
       type: object
       properties:
         id:
           type: number
         title:
           type: string
-        set_count:
-          type: number
-        rest:
-          type: number
-          description: Rest between sets in seconds
-        completed_count:
-          type: number
-          description: Completed programs count
       example:
         id: 5
-        title: Pull-ups
-        set_count: 5
-        rest: 60
-        completed_count: 12
+        title: Martin Eden
 
     CreateProgramPayload:
       type: object

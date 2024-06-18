@@ -24,10 +24,10 @@
     "zod": "^3.23.8",
     "zod-validation-error": "^3.3.0"
   },
-  "name": "training-api",
+  "name": "books-api",
   "version": "0.1.0",
-  "description": "Backed API for Training mobile app",
-  "main": "src/index.js",
+  "description": "Backed API for Book meetings club",
+  "main": "src/index.ts",
   "type": "module",
   "engines": {
     "node": "20.14.0"
