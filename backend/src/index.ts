@@ -9,17 +9,19 @@ let server: ReturnType<typeof app.listen> | null = null;
 AppDataSource.initialize().then(() => {
   logger.info("Connected to Postgres");
 
-  server = https
-    .createServer(
-      {
-        key: fs.readFileSync("localhost-key.pem"),
-        cert: fs.readFileSync("localhost.pem"),
-      },
-      app,
-    )
-    .listen(config.port, () => {
-      logger.info(`Server started at ${config.port}`);
-    });
+  server = (
+    config.env === "prod"
+      ? https.createServer(
+          {
+            key: fs.readFileSync("localhost-key.pem"),
+            cert: fs.readFileSync("localhost.pem"),
+          },
+          app,
+        )
+      : app
+  ).listen(config.port, () => {
+    logger.info(`Server started at ${config.port}`);
+  });
 });
 
 const exitHandler = () => {
