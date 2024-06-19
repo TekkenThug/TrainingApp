@@ -30,3 +30,37 @@ components:
       example:
         id: 5
         title: Martin Eden
+
+    Event:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Event id
+        title:
+          type: string
+          description: Title of event
+        date:
+          type: string
+          format: date-time
+          description: Datetime of beginning
+        bookId:
+          type: number
+          description: Related book id
+        duration:
+          type: string
+          description: Event duration
+        members_count:
+          type: number
+          description: Event members count
+        authorId:
+          type: number
+          description: User id, who was create this event
+      example:
+        id: 4
+        title: Who was Martin Eden?
+        bookId: 1
+        authorId: 2
+        date: 2020-02-12T07:20:50.52Z
+        duration: 1 hours 30 minutes
+        members_count: 12
