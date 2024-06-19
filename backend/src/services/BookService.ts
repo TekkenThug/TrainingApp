@@ -2,7 +2,7 @@ import { AppDataSource } from "@/database";
 import { Book } from "@/database/entity/Book";
 
 export default class BookService {
-  private static repository = AppDataSource.getRepository(Book);
+  private static readonly repository = AppDataSource.getRepository(Book);
 
   public static async get(searchQuery?: string) {
     if (searchQuery) {
